@@ -10,6 +10,9 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  *
@@ -40,8 +43,27 @@ public class UDPServer {
                    
                     System.out.print("Message data received from client..: ");
                     
-                    for (int i = 0; i< data.length; i++) 
-                    	System.out.print((char)data[i]);   
+                    char[] dataChar = new char[len];
+                    ArrayList<String> dataString = new ArrayList();
+                    for (int i = 0; i< data.length; i++) {
+                        //passa pra char
+                    	dataChar[i] = (char)data[i];
+                        System.out.print(dataChar[i]);
+                        
+                        if (dataChar[i] != ',' && dataChar[i] != ' ') {
+                            dataString.add(String.valueOf(dataChar[i]));
+                        }
+                    }
+                    
+                    //ordena
+                    for (String s : dataString) {
+                        if (s == " " || s == "") {
+                            dataString.remove(s);
+                        }
+                    }
+                    System.out.println("\nsem ordem: "+dataString);
+                    Collections.sort(dataString);
+                    System.out.println("\nordem: "+dataString);
                     
                     System.out.println("\nDatagram length..: " + packageLength + " characteres");
                     System.out.println("Client adrress..: " + address);
