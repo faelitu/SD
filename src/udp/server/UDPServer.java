@@ -49,7 +49,10 @@ public class UDPServer {
                         //passa pra char
                     	dataChar[i] = (char)data[i];
                         System.out.print(dataChar[i]);
-                        
+                    }
+                    
+                    //passa pra string
+                    for (int i = 0; i < packageLength; i++) {
                         if (dataChar[i] != ',' && dataChar[i] != ' ') {
                             dataString.add(String.valueOf(dataChar[i]));
                         }
@@ -61,9 +64,21 @@ public class UDPServer {
                             dataString.remove(s);
                         }
                     }
-                    System.out.println("\nsem ordem: "+dataString);
                     Collections.sort(dataString);
-                    System.out.println("\nordem: "+dataString);
+                    
+                    //retorna pra char
+                    int count = 0;
+                    for (int i = 0; i< data.length; i++) {
+                        if (dataChar[i] != ',' && dataChar[i] != ' ' && count < dataString.size()) {
+                            dataChar[i] = dataString.get(count).charAt(0);
+                            count++;
+                        }
+                    }
+                    
+                    //retorna pra byte
+                    for (int i = 0; i< data.length; i++) {
+                        data[i] = (byte)dataChar[i];
+                    }
                     
                     System.out.println("\nDatagram length..: " + packageLength + " characteres");
                     System.out.println("Client adrress..: " + address);
