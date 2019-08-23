@@ -59,11 +59,6 @@ public class UDPServer {
                     }
                     
                     //ordena
-                    for (String s : dataString) {
-                        if (s == " " || s == "") {
-                            dataString.remove(s);
-                        }
-                    }
                     Collections.sort(dataString);
                     
                     //retorna pra char
