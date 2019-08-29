@@ -50,8 +50,16 @@ public class ClientOfNameServer {
     
     public String listAllProcessesInTheNameServer() throws IOException {
         configureSocket();
-        // printStream prints to the socket output stream. The token "insert" is read in the server in order to decide what to do
+        // printStream prints to the socket output stream. The token "listAllProcesses" is read in the server in order to decide what to do
         printStream.println("listAllProcesses");
+        printStream.flush();
+        return bufferedReader.readLine();
+    }
+    
+    public String deleteNameFromNameServer(String name) throws IOException  {
+        configureSocket();
+        // printStream prints to the socket output stream. The token "delete" is read in the server in order to decide what to do
+        printStream.println("delete " + name);
         printStream.flush();
         return bufferedReader.readLine();
     }
@@ -78,6 +86,13 @@ public class ClientOfNameServer {
             
             System.out.println("Listing all processes in the nameServer");
             String allProcesses = clientOfNameServer.listAllProcessesInTheNameServer();
+            System.out.println(allProcesses.replace("[LINE_BREAK]", "\n"));
+            
+            System.out.println("Deleting process p1");
+            clientOfNameServer.deleteNameFromNameServer("p1");
+            
+            System.out.println("Listing all processes in the nameServer");
+            allProcesses = clientOfNameServer.listAllProcessesInTheNameServer();
             System.out.println(allProcesses.replace("[LINE_BREAK]", "\n"));
         } catch (Exception e) {
             System.err.println("Server aborted:" + e);

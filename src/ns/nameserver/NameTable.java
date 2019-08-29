@@ -5,6 +5,8 @@
  */
 package ns.nameserver;
 
+import java.util.LinkedList;
+
 /**
  *
  * @author Fellipe
@@ -14,10 +16,10 @@ package ns.nameserver;
 // to give a mapping from a process name to the host and the port number
 
 public class NameTable {   
-    public static final int MAX_SIZE = 100; 
-    private String[] processNamesArray = new String[MAX_SIZE];
-    private String[] hostsArray = new String[MAX_SIZE];
-    private int[] portsArray = new int[MAX_SIZE];
+    public static final int MAX_SIZE = 100;
+    private LinkedList<String> processNames = new LinkedList();
+    private LinkedList<String> hosts = new LinkedList();
+    private LinkedList<Integer> ports = new LinkedList();
     private int index = 0;
     
     public int search(String processName) {
@@ -35,6 +37,29 @@ public class NameTable {
             index++;
             return 1;
         } else // already there, or table full
+            return 0;
+    }
+    
+    public int delete(String processName) {
+        int position = 0;
+        boolean flag = false;
+        for (int i = 0; i < index; i++) {
+            if (processNamesArray[i].equals(processName)){
+                position = i;
+                flag = true;
+            }
+        }
+        
+        // if process exists, refactor
+        if (flag) {
+            for (int j = position; j < index; j++) {
+                processNamesArray[j - 1] = processNamesArray[j];
+                hostsArray[j - 1] = hostsArray[j];
+                portsArray[j - 1] = portsArray[j];
+            }
+            index--;
+            return 1;
+        } else // process not found
             return 0;
     }
     

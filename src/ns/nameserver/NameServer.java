@@ -63,6 +63,13 @@ public class NameServer {
                 String nameTableString = nameTable.toString().replace("\n", "[LINE_BREAK]");
                 System.out.println(nameTableString);
             	printWriter.println(nameTableString);
+            } else if (parameter.equals("delete")) {
+                String processName = stringTokenizer.nextToken();
+                int delete = nameTable.delete(processName);
+                if (delete == 0) // not found
+                    printWriter.println(0 + " " + "process not found !");
+                else
+                    printWriter.println("process " + processName + " deleted successfully");
             }
             
             printWriter.flush();
