@@ -20,66 +20,55 @@ public class NameTable {
     private LinkedList<String> processNames = new LinkedList();
     private LinkedList<String> hosts = new LinkedList();
     private LinkedList<Integer> ports = new LinkedList();
-    private int index = 0;
     
     public int search(String processName) {
-        for (int i = 0; i < index; i++)
-            if (processNamesArray[i].equals(processName)) return i;
+        for (int i = 0; i < processNames.size(); i++)
+            if (processNames.get(i).equals(processName)) return i;
         return -1;
     }
     
     public int insert(String processName, String hostName, int portNumber) {
         int oldIndex = search(processName); // is it already there?
-        if ((oldIndex == -1) && (index < MAX_SIZE)) { 
-            processNamesArray[index] = processName; 
-            hostsArray[index] = hostName;
-            portsArray[index] = portNumber;
-            index++;
+        if ((oldIndex == -1) && (processNames.size() < MAX_SIZE)) { 
+            processNames.add(processName); 
+            hosts.add(hostName);
+            ports.add(portNumber);
             return 1;
         } else // already there, or table full
             return 0;
     }
     
     public int delete(String processName) {
-        int position = 0;
-        boolean flag = false;
-        for (int i = 0; i < index; i++) {
-            if (processNamesArray[i].equals(processName)){
-                position = i;
-                flag = true;
+        for (int i = 0; i < processNames.size(); i++) {
+            if (processNames.get(i).equals(processName)){
+                processNames.remove(i);
+                hosts.remove(i);
+                ports.remove(i);
+                return 1;
             }
         }
-        
-        // if process exists, refactor
-        if (flag) {
-            for (int j = position; j < index; j++) {
-                processNamesArray[j - 1] = processNamesArray[j];
-                hostsArray[j - 1] = hostsArray[j];
-                portsArray[j - 1] = portsArray[j];
-            }
-            index--;
-            return 1;
-        } else // process not found
-            return 0;
+        return 0; // process not found
     }
     
     public int getPort(int index) {
-        return portsArray[index];
+        return ports.get(index);
     }
     
     public String getHostName(int index) {
-        return hostsArray[index];
+        return hosts.get(index);
     }
     
     public String toString( ) {
     	String result = "";
-    	for (int i=0; i < MAX_SIZE; i++) {
-    		if ((processNamesArray[i] == null) || (hostsArray[i] == null) || (portsArray[i] == 0))
-    			return result + "Empty name table";
-    		result+= "Process name..: " + processNamesArray[i] + 
-    				        "\tHostname/IP address..: " + hostsArray[i] + 
-    				        "\t\tPort..:" + portsArray[i]+"\n";
+    	for (int i=0; i < processNames.size(); i++) {
+    		result += "Process name..: " + processNames.get(i) + 
+    				        "\tHostname/IP address..: " + hosts.get(i) + 
+    				        "\t\tPort..:" + ports.get(i)+"\n";
     	}
+        
+        if (processNames.size() == 0) 
+            result += "Empty name table";
+        
     	return result;
     	}
     }

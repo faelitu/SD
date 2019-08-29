@@ -67,9 +67,9 @@ public class NameServer {
                 String processName = stringTokenizer.nextToken();
                 int delete = nameTable.delete(processName);
                 if (delete == 0) // not found
-                    printWriter.println(0 + " " + "process not found !");
+                    printWriter.println("Delete function returned " + delete + ": Process " + processName + " not found!");
                 else
-                    printWriter.println("process " + processName + " deleted successfully");
+                    printWriter.println("Process " + processName + " deleted successfully!");
             }
             
             printWriter.flush();

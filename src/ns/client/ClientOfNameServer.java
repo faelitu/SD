@@ -69,29 +69,34 @@ public class ClientOfNameServer {
         System.out.println("Client of name server started");
         
         try {
-            System.out.println("Inserting process p1, localhost, port 9999");
+            System.out.println("\nInserting process p1, localhost, port 9999");
             clientOfNameServer.insertNameInTheNameServer("p1", "localhost", 9999);  
             
-            System.out.println("Trying to locate p1");
+            System.out.println("\nTrying to locate p1");
             Address pa = clientOfNameServer.searchNameinTheNameServer("p1");
             System.out.println(pa.getHostName() + ":" + pa.getPort());
             
-            System.out.println("Inserting process p2, localhost, port 2222");
+            System.out.println("\nInserting process p2, localhost, port 2222");
             clientOfNameServer.insertNameInTheNameServer("p2", "192.168.1.20", 2222);
             
-            System.out.println("Trying to locate p2");
+            System.out.println("\nTrying to locate p2");
             pa = clientOfNameServer.searchNameinTheNameServer("p2");
             System.out.println(pa.getHostName() + ":" + pa.getPort());
             
             
-            System.out.println("Listing all processes in the nameServer");
+            System.out.println("\nListing all processes in the nameServer");
             String allProcesses = clientOfNameServer.listAllProcessesInTheNameServer();
             System.out.println(allProcesses.replace("[LINE_BREAK]", "\n"));
             
-            System.out.println("Deleting process p1");
-            clientOfNameServer.deleteNameFromNameServer("p1");
+            System.out.println("\nDeleting process p1");
+            String deleteResult = clientOfNameServer.deleteNameFromNameServer("p1");
+            System.out.println(deleteResult);
             
-            System.out.println("Listing all processes in the nameServer");
+            System.out.println("\nDeleting process p3");
+            deleteResult = clientOfNameServer.deleteNameFromNameServer("p3");
+            System.out.println(deleteResult);
+            
+            System.out.println("\nListing all processes in the nameServer");
             allProcesses = clientOfNameServer.listAllProcessesInTheNameServer();
             System.out.println(allProcesses.replace("[LINE_BREAK]", "\n"));
         } catch (Exception e) {
