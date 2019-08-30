@@ -24,17 +24,23 @@ public class ClientTCP {
 			PrintStream printStream = new PrintStream(outputStream);
 			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
-			System.out.println("Connection established with success");
+			System.out.println("Connection established with success\n");
+                        String echoMessage = "";
+                        
+                        while (!echoMessage.equals("done")) {
+                            System.out.println("Enter a message to the server: ");
+                            BufferedReader stdinp = new BufferedReader(new InputStreamReader(System.in));
+                            String echoline = stdinp.readLine(); // reads user message
 
-			System.out.println("Sending a message to the server...: " + message);
+                            System.out.println("Sending a message to the server...: " + echoline);
 
-			printStream.println(message);
-			printStream.flush();
+                            printStream.println(echoline);
+                            printStream.flush();
 
-			// The line below blocks until a reply from the server arrives
-			String echoMessage = bufferedReader.readLine();
-			System.out.println("Message echoed by the server...: " + echoMessage);
-
+                            // The line below blocks until a reply from the server arrives
+                            echoMessage = bufferedReader.readLine();
+                            System.out.println("Message echoed by the server...: " + echoMessage + "\n");
+                        }
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
